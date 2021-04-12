@@ -1,23 +1,34 @@
-const addNewSite = function(event) {
+const sites = [];
+
+const addSite = function (event) {
+
   event.preventDefault();
-  console.log("inside addNewSite");
   const url = $("#form-url").val();
   const title = $("#form-title").val();
   const category = $("#form-category").val();
+
   console.log(url);
   console.log(title);
   console.log(category);
-
-  const aElements = $("<a>").attr("href",url).text(title);
-  const liElements = $("<li>").append(aElements);
-  $("#site-list").append(liElements);
-
+  
+  const newSite = {
+    url: url,
+    title: title,
+    category: category
+  };
+  
+  sites.push(newSite);
+  console.log(sites);
+  writeSiteList(sites);
+}
+const writeSiteList = function (site) {
+  const aElem = $("<a>").attr("href", site[site.length - 1].url).text(site[site.length - 1].title);
+  const liElem = $("<li>").append(aElem);
+  $("#site-list").append(liElem);
 }
 
-const init = function() {
-  console.log("inside init");
-  $("#form-submit").on("click",addNewSite);
+const init = function () {
+  $("form").submit(addSite);
 }
-
 
 $(document).ready(init);
